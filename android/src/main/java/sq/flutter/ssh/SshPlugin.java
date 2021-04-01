@@ -151,7 +151,6 @@ public class SshPlugin implements MethodCallHandler, StreamHandler {
     } else if (call.method.equals("closeShell")) {
       closeShell((HashMap) call.arguments);
     } else if (call.method.equals("connectSFTP")) {
-      session.setConfig("PreferredAuthentications", "password");
       connectSFTP((HashMap) call.arguments, result);
     } else if (call.method.equals("sftpLs")) {
       sftpLs((HashMap) call.arguments, result);
@@ -246,6 +245,7 @@ public class SshPlugin implements MethodCallHandler, StreamHandler {
           Properties properties = new Properties();
           properties.setProperty("StrictHostKeyChecking", "no");
           session.setConfig(properties);
+          session.setConfig("PreferredAuthentications", "password");
           session.connect();
 
           if (session.isConnected()) {
